@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="NemaDemo">
+        <addColumn tableName="LICENCE_APPLICATION">
+            <column name="APPLICANT_ID" type="UUID"/>
+        </addColumn>
+
+        <addNotNullConstraint columnName="APPLICANT_ID" tableName="LICENCE_APPLICATION"/>
+    </changeSet>
+    <changeSet id="2" author="NemaDemo">
+        <createIndex indexName="IDX_LICENCE_APPLICATION_APPLICANT" tableName="LICENCE_APPLICATION">
+            <column name="APPLICANT_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="APPLICANT_ID" baseTableName="LICENCE_APPLICATION"
+                                 constraintName="FK_LICENCE_APPLICATION_ON_APPLICANT" referencedColumnNames="ID"
+                                 referencedTableName="APPLICANT"/>
+    </changeSet>
+    <changeSet id="3" author="NemaDemo">
+        <dropColumn columnName="USER_ID" tableName="LICENCE_APPLICATION"/>
+    </changeSet>
+</databaseChangeLog>

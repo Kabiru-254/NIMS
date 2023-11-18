@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://applicationStepListView.title"
+      focusComponent="applicationStepsDataGrid">
+    <data>
+        <collection id="licenceApplicationStepsDc"
+                    class="com.company.nemademo.entity.LicenceApplicationStep">
+            <fetchPlan extends="_base">
+                <property name="licenceId" fetchPlan="_base"/>
+                <property name="applicationCategoryId" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="applicationStepsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from LicenceApplicationStep e]]>
+                </query>
+            </loader>
+        </collection>
+        <instance id="licenceApplicationStepDc"
+                  class="com.company.nemademo.entity.LicenceApplicationStep">
+            <fetchPlan extends="_base">
+                <property name="licenceId" fetchPlan="_base"/>
+                <property name="applicationCategoryId" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="licenceApplicationStepDl"/>
+        </instance>
+        <collection id="licenceTypeDc" class="com.company.nemademo.entity.LicenceType">
+            <fetchPlan extends="_base"/>
+            <loader id="licenceTypeDl">
+                <query>
+                    <![CDATA[select e from LicenceType e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="applicationCategoryDc" class="com.company.nemademo.entity.ApplicationCategory">
+            <fetchPlan extends="_base"/>
+            <loader id="applicationCategoryDl">
+                <query>
+                    <![CDATA[select e from ApplicationCategory e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout padding="false">
+        <formLayout classNames="master-detail-layout" height="100%">
+            <vbox id="listLayout" height="100%">
+                <genericFilter id="genericFilter"
+                               dataLoader="applicationStepsDl">
+                    <properties include=".*"/>
+                </genericFilter>
+                <hbox id="buttonsPanel" classNames="buttons-panel">
+                    <button id="createBtn" action="applicationStepsDataGrid.create"/>
+                    <button id="editBtn" action="applicationStepsDataGrid.edit"/>
+                    <button id="removeBtn" action="applicationStepsDataGrid.remove"/>
+                    <simplePagination id="pagination" dataLoader="applicationStepsDl"/>
+                </hbox>
+                <dataGrid id="applicationStepsDataGrid"
+                          width="100%"
+                          minHeight="20em"
+                          dataContainer="licenceApplicationStepsDc"
+                          columnReorderingAllowed="true">
+                    <actions>
+                        <action id="create" type="list_create"/>
+                        <action id="edit" type="list_edit"/>
+                        <action id="remove" type="list_remove"/>
+                    </actions>
+                    <columns resizable="true">
+                        <column property="licenceId"/>
+                        <column property="applicationCategoryId"/>
+                        <column property="stepName"/>
+                        <column property="stepCount"/>
+                        <column property="requiresUpload"/>
+                        <column property="maxSteps"/>
+                    </columns>
+                </dataGrid>
+                <hbox id="lookupActions" visible="false">
+                    <button id="selectBtn" action="selectAction"/>
+                    <button id="discardBtn" action="discardAction"/>
+                </hbox>
+            </vbox>
+            <vbox id="detailsLayout" height="100%">
+                <formLayout id="form" dataContainer="licenceApplicationStepDc">
+                    <entityComboBox id="licenceIdField" property="licenceId"
+                    dataContainer="licenceApplicationStepDc" itemsContainer="licenceTypeDc"
+                                    label="msg://licenceIdField.label">
+                        <actions>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityComboBox>
+                    <entityComboBox id="applicationCategoryIdField" property="applicationCategoryId"
+                    dataContainer="licenceApplicationStepDc" itemsContainer="applicationCategoryDc"
+                                    label="msg://applicationCategoryIdField.label">
+                        <actions>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityComboBox>
+                    <textField id="stepNameField" property="stepName"/>
+                    <textField id="stepCountField" property="stepCount"/>
+                    <select id="requiresUploadField" property="requiresUpload"/>
+                    <textField id="maxStepsField" property="maxSteps"/>
+                </formLayout>
+                <hbox id="detailActions">
+                    <button id="saveBtn" text="msg:///actions.Save" icon="CHECK" themeNames="primary"/>
+                    <button id="cancelBtn" text="msg:///actions.Cancel" icon="BAN"/>
+                </hbox>
+            </vbox>
+        </formLayout>
+    </layout>
+</view>

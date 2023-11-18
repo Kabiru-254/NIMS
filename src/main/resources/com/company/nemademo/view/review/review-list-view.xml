@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://reviewListView.title"
+      focusComponent="reviewsDataGrid">
+    <data>
+        <collection id="reviewsDc"
+                    class="com.company.nemademo.entity.Review">
+            <fetchPlan extends="_base">
+                <property name="applicationId" fetchPlan="_base"/>
+                <property name="reviewerUserId" fetchPlan="_base"/>
+                <property name="recommendationId" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="reviewsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from Review e]]>
+                </query>
+            </loader>
+        </collection>
+        <instance id="reviewDc"
+                  class="com.company.nemademo.entity.Review">
+            <fetchPlan extends="_base">
+                <property name="applicationId" fetchPlan="_base"/>
+                <property name="reviewerUserId" fetchPlan="_base"/>
+                <property name="recommendationId" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="reviewDl"/>
+        </instance>
+        <collection id="applicationDc" class="com.company.nemademo.entity.LicenceApplication">
+            <fetchPlan extends="_base"/>
+            <loader id="applicationDl">
+                <query>
+                    <![CDATA[select e from LicenceApplication e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="userDc" class="com.company.nemademo.entity.User">
+            <fetchPlan extends="_base"/>
+            <loader id="userDl">
+                <query>
+                    <![CDATA[select e from User e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="recommendationDc" class="com.company.nemademo.entity.Recommendation">
+            <fetchPlan extends="_base"/>
+            <loader id="recommendationDl">
+                <query>
+                    <![CDATA[select e from Recommendation e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout padding="false">
+        <formLayout classNames="master-detail-layout" height="100%">
+            <vbox id="listLayout" height="100%">
+                <genericFilter id="genericFilter"
+                               dataLoader="reviewsDl">
+                    <properties include=".*"/>
+                </genericFilter>
+                <hbox id="buttonsPanel" classNames="buttons-panel">
+                    <button id="createBtn" action="reviewsDataGrid.create"/>
+                    <button id="editBtn" action="reviewsDataGrid.edit"/>
+                    <button id="removeBtn" action="reviewsDataGrid.remove"/>
+                    <simplePagination id="pagination" dataLoader="reviewsDl"/>
+                </hbox>
+                <dataGrid id="reviewsDataGrid"
+                          width="100%"
+                          minHeight="20em"
+                          dataContainer="reviewsDc"
+                          columnReorderingAllowed="true">
+                    <actions>
+                        <action id="create" type="list_create"/>
+                        <action id="edit" type="list_edit"/>
+                        <action id="remove" type="list_remove"/>
+                    </actions>
+                    <columns resizable="true">
+                        <column property="applicationId"/>
+                        <column property="reviewerUserId"/>
+                        <column property="comments"/>
+                        <column property="recommendationId"/>
+                    </columns>
+                </dataGrid>
+                <hbox id="lookupActions" visible="false">
+                    <button id="selectBtn" action="selectAction"/>
+                    <button id="discardBtn" action="discardAction"/>
+                </hbox>
+            </vbox>
+            <vbox id="detailsLayout" height="100%">
+                <formLayout id="form" dataContainer="reviewDc">
+                    <entityComboBox id="applicationIdField" property="applicationId"
+                    dataContainer="reviewDc" itemsContainer="applicationDc"
+                                    label="msg://applicationIdField.label">
+                        <actions>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityComboBox>
+                    <entityComboBox id="reviewerUserIdField" property="reviewerUserId"
+                                    dataContainer="reviewDc" itemsContainer="userDc"
+                                    label="msg://reviewerUserIdField.label">
+                        <actions>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityComboBox>
+                    <textField id="commentsField" property="comments"/>
+                    <entityComboBox id="recommendationIdField" property="recommendationId"
+                    dataContainer="reviewDc" itemsContainer="recommendationDc"
+                                    label="msg://recommendationIdField.label">
+                        <actions>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityComboBox>
+                </formLayout>
+                <hbox id="detailActions">
+                    <button id="saveBtn" text="msg:///actions.Save" icon="CHECK" themeNames="primary"/>
+                    <button id="cancelBtn" text="msg:///actions.Cancel" icon="BAN"/>
+                </hbox>
+            </vbox>
+        </formLayout>
+    </layout>
+</view>

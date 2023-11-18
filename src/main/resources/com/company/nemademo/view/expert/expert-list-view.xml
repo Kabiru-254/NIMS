@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://expertListView.title"
+      focusComponent="expertsDataGrid">
+    <data>
+        <collection id="expertsDc"
+                    class="com.company.nemademo.entity.Expert">
+            <fetchPlan extends="_base">
+                <property name="sectorId" fetchPlan="_base"/>
+                <property name="subSectorId" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="expertsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from Expert e]]>
+                </query>
+            </loader>
+        </collection>
+        <instance id="expertDc"
+                  class="com.company.nemademo.entity.Expert">
+            <fetchPlan extends="_base">
+                <property name="sectorId" fetchPlan="_base"/>
+                <property name="subSectorId" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="expertDl"/>
+        </instance>
+        <collection id="sectorDc" class="com.company.nemademo.entity.Sector">
+            <fetchPlan extends="_base"/>
+            <loader id="sectorDl">
+                <query>
+                    <![CDATA[select e from Sector e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="subSectorDc" class="com.company.nemademo.entity.SubSector">
+            <fetchPlan extends="_base"/>
+            <loader id="subSectorDl">
+                <query>
+                    <![CDATA[select e from SubSector e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout padding="false">
+        <formLayout classNames="master-detail-layout" height="100%">
+            <vbox id="listLayout" height="100%">
+                <genericFilter id="genericFilter"
+                               dataLoader="expertsDl">
+                    <properties include=".*"/>
+                </genericFilter>
+                <hbox id="buttonsPanel" classNames="buttons-panel">
+                    <button id="createBtn" action="expertsDataGrid.create"/>
+                    <button id="editBtn" action="expertsDataGrid.edit"/>
+                    <button id="removeBtn" action="expertsDataGrid.remove"/>
+                    <simplePagination id="pagination" dataLoader="expertsDl"/>
+                </hbox>
+                <dataGrid id="expertsDataGrid"
+                          width="100%"
+                          minHeight="20em"
+                          dataContainer="expertsDc"
+                          columnReorderingAllowed="true">
+                    <actions>
+                        <action id="create" type="list_create"/>
+                        <action id="edit" type="list_edit"/>
+                        <action id="remove" type="list_remove"/>
+                    </actions>
+                    <columns resizable="true">
+                        <column property="firstName"/>
+                        <column property="lastName"/>
+                        <column property="emailAddress"/>
+                        <column property="mobileNumber"/>
+                        <column property="licenceNumber"/>
+                        <column property="licenceExpiryDate"/>
+                        <column property="sectorId"/>
+                        <column property="subSectorId"/>
+                    </columns>
+                </dataGrid>
+                <hbox id="lookupActions" visible="false">
+                    <button id="selectBtn" action="selectAction"/>
+                    <button id="discardBtn" action="discardAction"/>
+                </hbox>
+            </vbox>
+            <vbox id="detailsLayout" height="100%">
+                <formLayout id="form" dataContainer="expertDc">
+                    <textField id="firstNameField" property="firstName"/>
+                    <textField id="lastNameField" property="lastName"/>
+                    <textField id="emailAddressField" property="emailAddress"/>
+                    <textField id="mobileNumberField" property="mobileNumber"/>
+                    <textField id="licenceNumberField" property="licenceNumber"/>
+                    <datePicker id="licenceExpiryDateField" property="licenceExpiryDate"/>
+                    <entityComboBox id="sectorIdField" property="sectorId" dataContainer="expertDc" itemsContainer="sectorDc"
+                                    label="msg://sectorIdField.label">
+                        <actions>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityComboBox>
+                    <entityComboBox id="subSectorIdField" property="subSectorId"
+                                    dataContainer="expertDc" itemsContainer="subSectorDc"
+                                    label="msg://subSectorIdField.label">
+                        <actions>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityComboBox>
+                </formLayout>
+                <hbox id="detailActions">
+                    <button id="saveBtn" text="msg:///actions.Save" icon="CHECK" themeNames="primary"/>
+                    <button id="cancelBtn" text="msg:///actions.Cancel" icon="BAN"/>
+                </hbox>
+            </vbox>
+        </formLayout>
+    </layout>
+</view>

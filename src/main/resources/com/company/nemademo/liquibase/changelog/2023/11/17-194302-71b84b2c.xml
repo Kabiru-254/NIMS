@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="NemaDemo">
+        <addColumn tableName="USER_">
+            <column name="APPLICATION_CATEGORY_ID" type="UUID"/>
+            <column name="ORGANIZATION_ID" type="UUID"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="2" author="NemaDemo">
+        <createIndex indexName="IDX_USER__APPLICATION_CATEGORY" tableName="USER_">
+            <column name="APPLICATION_CATEGORY_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="APPLICATION_CATEGORY_ID" baseTableName="USER_"
+                                 constraintName="FK_USER__ON_APPLICATION_CATEGORY" referencedColumnNames="ID"
+                                 referencedTableName="APPLICATION_CATEGORY"/>
+    </changeSet>
+    <changeSet id="3" author="NemaDemo">
+        <createIndex indexName="IDX_USER__ORGANIZATION" tableName="USER_">
+            <column name="ORGANIZATION_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="ORGANIZATION_ID" baseTableName="USER_"
+                                 constraintName="FK_USER__ON_ORGANIZATION" referencedColumnNames="ID"
+                                 referencedTableName="ORGANIZATION"/>
+    </changeSet>
+</databaseChangeLog>

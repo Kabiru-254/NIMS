@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<menu-config xmlns="http://jmix.io/schema/flowui/menu">
+
+    <menu opened="true" id="application" title="msg://com.company.nemademo/menu.application.title">
+        <menu id="configurations" description="msg://com.company.nemademo/menu_config.configurations.description"
+              title="msg://com.company.nemademo/menu_config.configurations.title" icon="COG_O">
+            <item view="ApplicationCategory.list"
+                  title="msg://com.company.nemademo.view.applicationcategory/applicationCategoryListView.title"
+                  icon="CALENDAR_ENVELOPE" classNames="menu-item"/>
+            <item view="LicenceApplicationStep.list"
+                  title="msg://com.company.nemademo.view.applicationstep/applicationStepListView.title" icon="LEVEL_UP"
+                  classNames="menu-item"/>
+            <item view="LicenceType.list" title="msg://com.company.nemademo.view.licencetype/licenceTypeListView.title"
+                  icon="TOOLS" classNames="menu-item"/>
+            <item view="Organization.list"
+                  title="msg://com.company.nemademo.view.organization/organizationListView.title"
+                  icon="GOOGLE_PLUS_SQUARE" classNames="menu-item"/>
+            <item view="Recommendation.list"
+                  title="msg://com.company.nemademo.view.recommendation/recommendationListView.title" icon="RECORDS"
+                  classNames="menu-item"/>
+            <item view="Sector.list" title="msg://com.company.nemademo.view.sector/sectorListView.title" icon="CIRCLE"
+                  classNames="menu-item"/>
+            <item view="SubSector.list" title="msg://com.company.nemademo.view.subsector/subSectorListView.title"
+                  icon="CIRCLE_THIN" classNames="menu-item"/>
+            <item view="User.list" title="msg://com.company.nemademo.view.user/UserListView.title" icon="USER"
+                  classNames="menu-item"/>
+        </menu>
+        <item view="Expert.list" title="msg://com.company.nemademo.view.expert/expertListView.title" icon="NATIVE_BUTTON"
+              classNames="menu-item"/>
+        <item view="Applicant.list" title="msg://com.company.nemademo.view.applicant/applicantListView.title"
+              icon="USERS" classNames="menu-item"/>
+        <item view="Project.list" title="msg://com.company.nemademo.view.project/projectListView.title"
+              icon="PROGRESSBAR" classNames="menu-item"/>
+        <item view="LicenceApplication.list"
+              title="msg://com.company.nemademo.view.licenceapplication/licenceApplicationListView.title" icon="MAGIC"
+              classNames="menu-item"/>
+        <item view="Review.list" title="msg://com.company.nemademo.view.review/reviewListView.title" icon="LIST"
+              classNames="menu-item"/>
+        <item view="PublicComments.list"
+              title="msg://com.company.nemademo.view.publiccomments/publicCommentsListView.title"
+              icon="COMMENT_ELLIPSIS_O" classNames="menu-item"/>
+    </menu>
+</menu-config>

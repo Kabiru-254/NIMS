@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://applicationCategoryListView.title"
+      focusComponent="applicationCategoriesDataGrid">
+    <data>
+        <collection id="applicationCategoriesDc"
+                    class="com.company.nemademo.entity.ApplicationCategory">
+            <fetchPlan extends="_base"/>
+            <loader id="applicationCategoriesDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from ApplicationCategory e]]>
+                </query>
+            </loader>
+        </collection>
+        <instance id="applicationCategoryDc"
+                  class="com.company.nemademo.entity.ApplicationCategory">
+            <fetchPlan extends="_base"/>
+            <loader id="applicationCategoryDl"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout padding="false">
+        <formLayout classNames="master-detail-layout" height="100%">
+            <vbox id="listLayout" height="100%">
+                <genericFilter id="genericFilter"
+                               dataLoader="applicationCategoriesDl">
+                    <properties include=".*"/>
+                </genericFilter>
+                <hbox id="buttonsPanel" classNames="buttons-panel">
+                    <button id="createBtn" action="applicationCategoriesDataGrid.create"/>
+                    <button id="editBtn" action="applicationCategoriesDataGrid.edit"/>
+                    <button id="removeBtn" action="applicationCategoriesDataGrid.remove"/>
+                    <simplePagination id="pagination" dataLoader="applicationCategoriesDl"/>
+                </hbox>
+                <dataGrid id="applicationCategoriesDataGrid"
+                          width="100%"
+                          minHeight="20em"
+                          dataContainer="applicationCategoriesDc"
+                          columnReorderingAllowed="true">
+                    <actions>
+                        <action id="create" type="list_create"/>
+                        <action id="edit" type="list_edit"/>
+                        <action id="remove" type="list_remove"/>
+                    </actions>
+                    <columns resizable="true">
+                        <column property="categoryName"/>
+                        <column property="description"/>
+                    </columns>
+                </dataGrid>
+                <hbox id="lookupActions" visible="false">
+                    <button id="selectBtn" action="selectAction"/>
+                    <button id="discardBtn" action="discardAction"/>
+                </hbox>
+            </vbox>
+            <vbox id="detailsLayout" height="100%">
+                <formLayout id="form" dataContainer="applicationCategoryDc">
+                    <textField id="categoryNameField" property="categoryName"/>
+                    <textField id="descriptionField" property="description"/>
+                </formLayout>
+                <hbox id="detailActions">
+                    <button id="saveBtn" text="msg:///actions.Save" icon="CHECK" themeNames="primary"/>
+                    <button id="cancelBtn" text="msg:///actions.Cancel" icon="BAN"/>
+                </hbox>
+            </vbox>
+        </formLayout>
+    </layout>
+</view>

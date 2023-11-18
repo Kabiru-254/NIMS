@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://UserDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="userDc"
+                  class="com.company.nemademo.entity.User">
+            <fetchPlan extends="_base">
+                <property name="organizationId" fetchPlan="_base"/>
+                <property name="applicationCategoryId" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader/>
+        </instance>
+        <collection id="organizationDc" class="com.company.nemademo.entity.Organization">
+            <fetchPlan extends="_base"/>
+            <loader id="organizationDl">
+                <query>
+                    <![CDATA[select e from Organization e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="applicationCategoryDc" class="com.company.nemademo.entity.ApplicationCategory">
+            <fetchPlan extends="_base"/>
+            <loader id="applicationCategoryDl">
+                <query>
+                    <![CDATA[select e from ApplicationCategory e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout>
+        <formLayout id="form" dataContainer="userDc">
+            <textField id="usernameField" property="username" readOnly="true"/>
+            <passwordField id="passwordField"
+                           label="msg://com.company.nemademo.entity/User.password"
+                           required="true"
+                           visible="false"/>
+            <passwordField id="confirmPasswordField"
+                           label="msg://confirmPassword"
+                           required="true"
+                           visible="false"/>
+            <textField id="firstNameField" property="firstName"/>
+            <textField id="lastNameField" property="lastName"/>
+            <textField id="emailField" property="email"/>
+            <comboBox id="timeZoneField" property="timeZoneId"/>
+            <checkbox id="activeField" property="active"/>
+            <entityComboBox id="organizationIdField" property="organizationId" dataContainer="userDc"
+                            itemsContainer="organizationDc" label="msg://organizationIdField.label">
+                <actions>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityComboBox>
+            <entityComboBox id="applicationCategoryIdField" property="applicationCategoryId"
+                            dataContainer="userDc" itemsContainer="applicationCategoryDc"
+                            label="msg://applicationCategoryIdField.label">
+                <actions>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityComboBox>
+        </formLayout>
+        <hbox id="detailActions">
+            <button id="saveAndCloseBtn" action="saveAction"/>
+            <button id="closeBtn" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

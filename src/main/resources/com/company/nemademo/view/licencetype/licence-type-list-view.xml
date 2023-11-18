@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://licenceTypeListView.title"
+      focusComponent="licenceTypesDataGrid">
+    <data>
+        <collection id="licenceTypesDc"
+                    class="com.company.nemademo.entity.LicenceType">
+            <fetchPlan extends="_base"/>
+            <loader id="licenceTypesDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from LicenceType e]]>
+                </query>
+            </loader>
+        </collection>
+        <instance id="licenceTypeDc"
+                  class="com.company.nemademo.entity.LicenceType">
+            <fetchPlan extends="_base"/>
+            <loader id="licenceTypeDl"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout padding="false">
+        <formLayout classNames="master-detail-layout" height="100%">
+            <vbox id="listLayout" height="100%">
+                <genericFilter id="genericFilter"
+                               dataLoader="licenceTypesDl">
+                    <properties include=".*"/>
+                </genericFilter>
+                <hbox id="buttonsPanel" classNames="buttons-panel">
+                    <button id="createBtn" action="licenceTypesDataGrid.create"/>
+                    <button id="editBtn" action="licenceTypesDataGrid.edit"/>
+                    <button id="removeBtn" action="licenceTypesDataGrid.remove"/>
+                    <simplePagination id="pagination" dataLoader="licenceTypesDl"/>
+                </hbox>
+                <dataGrid id="licenceTypesDataGrid"
+                          width="100%"
+                          minHeight="20em"
+                          dataContainer="licenceTypesDc"
+                          columnReorderingAllowed="true">
+                    <actions>
+                        <action id="create" type="list_create"/>
+                        <action id="edit" type="list_edit"/>
+                        <action id="remove" type="list_remove"/>
+                    </actions>
+                    <columns resizable="true">
+                        <column property="name"/>
+                        <column property="description"/>
+                        <column property="prefix"/>
+                    </columns>
+                </dataGrid>
+                <hbox id="lookupActions" visible="false">
+                    <button id="selectBtn" action="selectAction"/>
+                    <button id="discardBtn" action="discardAction"/>
+                </hbox>
+            </vbox>
+            <vbox id="detailsLayout" height="100%">
+                <formLayout id="form" dataContainer="licenceTypeDc">
+                    <textField id="nameField" property="name"/>
+                    <textField id="descriptionField" property="description"/>
+                    <textField id="prefixField" property="prefix"/>
+                </formLayout>
+                <hbox id="detailActions">
+                    <button id="saveBtn" text="msg:///actions.Save" icon="CHECK" themeNames="primary"/>
+                    <button id="cancelBtn" text="msg:///actions.Cancel" icon="BAN"/>
+                </hbox>
+            </vbox>
+        </formLayout>
+    </layout>
+</view>

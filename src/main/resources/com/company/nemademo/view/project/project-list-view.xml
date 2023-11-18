@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://projectListView.title"
+      focusComponent="projectsDataGrid">
+    <data>
+        <collection id="projectsDc"
+                    class="com.company.nemademo.entity.Project">
+            <fetchPlan extends="_base">
+                <property name="applicantId" fetchPlan="_base"/>
+                <property name="expertId" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="projectsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from Project e]]>
+                </query>
+            </loader>
+        </collection>
+        <instance id="projectDc"
+                  class="com.company.nemademo.entity.Project">
+            <fetchPlan extends="_base">
+                <property name="applicantId" fetchPlan="_base"/>
+                <property name="expertId" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="projectDl"/>
+        </instance>
+        <collection id="applicantDc" class="com.company.nemademo.entity.Applicant">
+            <fetchPlan extends="_base"/>
+            <loader id="applicantDl">
+                <query>
+                    <![CDATA[select e from Applicant e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="expertDc" class="com.company.nemademo.entity.Expert">
+            <fetchPlan extends="_base"/>
+            <loader id="expertDl">
+                <query>
+                    <![CDATA[select e from Expert e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout padding="false">
+        <formLayout classNames="master-detail-layout" height="100%">
+            <vbox id="listLayout" height="100%">
+                <genericFilter id="genericFilter"
+                               dataLoader="projectsDl">
+                    <properties include=".*"/>
+                </genericFilter>
+                <hbox id="buttonsPanel" classNames="buttons-panel">
+                    <button id="createBtn" action="projectsDataGrid.create"/>
+                    <button id="editBtn" action="projectsDataGrid.edit"/>
+                    <button id="removeBtn" action="projectsDataGrid.remove"/>
+                    <simplePagination id="pagination" dataLoader="projectsDl"/>
+                </hbox>
+                <dataGrid id="projectsDataGrid"
+                          width="100%"
+                          minHeight="20em"
+                          dataContainer="projectsDc"
+                          columnReorderingAllowed="true">
+                    <actions>
+                        <action id="create" type="list_create"/>
+                        <action id="edit" type="list_edit"/>
+                        <action id="remove" type="list_remove"/>
+                    </actions>
+                    <columns resizable="true">
+                        <column property="applicantId"/>
+                        <column property="expertId"/>
+                        <column property="projectName"/>
+                        <column property="description"/>
+                        <column property="longitude"/>
+                        <column property="latitude"/>
+                        <column property="cost"/>
+                        <column property="projectFileNumber"/>
+                    </columns>
+                </dataGrid>
+                <hbox id="lookupActions" visible="false">
+                    <button id="selectBtn" action="selectAction"/>
+                    <button id="discardBtn" action="discardAction"/>
+                </hbox>
+            </vbox>
+            <vbox id="detailsLayout" height="100%">
+                <formLayout id="form" dataContainer="projectDc">
+                    <entityComboBox id="applicantIdField" property="applicantId"
+                                    dataContainer="projectDc" itemsContainer="applicantDc"
+                                    label="msg://applicantIdField.label">
+                        <actions>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityComboBox>
+                    <entityComboBox id="expertIdField" property="expertId"
+                                    dataContainer="projectDc" itemsContainer="expertDc"
+                                    label="msg://expertIdField.label">
+                        <actions>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityComboBox>
+                    <textField id="projectNameField" property="projectName"/>
+                    <textField id="descriptionField" property="description"/>
+                    <textField id="longitudeField" property="longitude"/>
+                    <textField id="latitudeField" property="latitude"/>
+                    <textField id="costField" property="cost"/>
+                    <textField id="projectFileNumberField" property="projectFileNumber"/>
+                </formLayout>
+                <hbox id="detailActions">
+                    <button id="saveBtn" text="msg:///actions.Save" icon="CHECK" themeNames="primary"/>
+                    <button id="cancelBtn" text="msg:///actions.Cancel" icon="BAN"/>
+                </hbox>
+            </vbox>
+        </formLayout>
+    </layout>
+</view>

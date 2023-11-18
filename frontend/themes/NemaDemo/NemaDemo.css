@@ -1,0 +1,67 @@
+/*#menu{*/
+/*    !*border: 1px solid red;*!*/
+/*    padding: 0;*/
+/*    margin: 0;*/
+/*}*/
+/*#navigation{*/
+/*    !*border: 1px solid blue;*!*/
+/*}*/
+/**{*/
+/*    transition: ease .2s;*/
+/*}*/
+/*.menu-item{*/
+/*    border: 1px solid #87CEEB;*/
+/*    !*border-radius: 7px;*!*/
+/*    font-size: 12px;*/
+/*    font-weight: bold;*/
+/*    margin: 4px 0;*/
+/*    !*padding: 0 0 0 10px;*!*/
+/*    align-items: center;*/
+/*    text-align: center;*/
+/*    text-transform: capitalize;*/
+/*    !*width: 100%;*!*/
+/*}*/
+/*.menu-item:hover{*/
+/*    background-color: #87CEEB;*/
+/*    color: white;*/
+/*    border: 1px solid whitesmoke;*/
+/*    !*border-radius: 7px;*!*/
+/*}*/
+
+
+/*        !*LIST VIEW*!*/
+
+/*!*#createBtn{*!*/
+/*!*    padding: 5px 5px;*!*/
+/*!*    border: 1px solid green;*!*/
+/*!*    color: white;*!*/
+/*!*    background-color: green;*!*/
+/*!*}*!*/
+/*!*#editBtn{*!*/
+/*!*    padding: 5px 5px;*!*/
+/*!*    border: 1px solid #39aade;*!*/
+/*!*    color: white;*!*/
+/*!*    background-color: #39aade;*!*/
+/*!*}*!*/
+/*!*#removeBtn{*!*/
+/*!*    padding: 5px 5px;*!*/
+/*!*    border: 1px solid red;*!*/
+/*!*    color: white;*!*/
+/*!*    background-color: red;*!*/
+/*!*}*!*/
+
+
+#loginImage{
+    width: 270px;
+}
+#logoImage{
+    width: 190px;
+    height: 42px;
+    background-size: cover;
+}
+#applicationTitle{
+    /*border: 1px solid red;*/
+}
+#appLayout{
+    border: 1px solid red;
+}

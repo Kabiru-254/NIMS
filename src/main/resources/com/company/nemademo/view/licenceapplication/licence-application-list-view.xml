@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://licenceApplicationListView.title"
+      focusComponent="licenceApplicationsDataGrid">
+    <data>
+        <collection id="licenceApplicationsDc"
+                    class="com.company.nemademo.entity.LicenceApplication">
+            <fetchPlan extends="_base">
+                <property name="stepId" fetchPlan="_base"/>
+                <property name="applicationCategoryId" fetchPlan="_base"/>
+                <property name="expertId" fetchPlan="_base"/>
+                <property name="projectId" fetchPlan="_base"/>
+                <property name="applicantId" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="licenceApplicationsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from LicenceApplication e]]>
+                </query>
+            </loader>
+        </collection>
+        <instance id="licenceApplicationDc"
+                  class="com.company.nemademo.entity.LicenceApplication">
+            <fetchPlan extends="_base">
+                <property name="stepId" fetchPlan="_base"/>
+                <property name="applicationCategoryId" fetchPlan="_base"/>
+                <property name="expertId" fetchPlan="_base"/>
+                <property name="projectId" fetchPlan="_base"/>
+                <property name="applicantId" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="licenceApplicationDl"/>
+        </instance>
+        <collection id="applicantDc" class="com.company.nemademo.entity.Applicant">
+            <fetchPlan extends="_base"/>
+            <loader id="applicantDl">
+                <query>
+                    <![CDATA[select e from Applicant e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="stepDc" class="com.company.nemademo.entity.LicenceApplicationStep">
+            <fetchPlan extends="_base"/>
+            <loader id="stepDl">
+                <query>
+                    <![CDATA[select e from LicenceApplicationStep e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="applicationCategoryDc" class="com.company.nemademo.entity.ApplicationCategory">
+            <fetchPlan extends="_base"/>
+            <loader id="applicationCategoryDl">
+                <query>
+                    <![CDATA[select e from ApplicationCategory e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="expertDc" class="com.company.nemademo.entity.Expert">
+            <fetchPlan extends="_base"/>
+            <loader id="expertDl">
+                <query>
+                    <![CDATA[select e from Expert e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="projectDc" class="com.company.nemademo.entity.Project">
+            <fetchPlan extends="_base"/>
+            <loader id="projectDl">
+                <query>
+                    <![CDATA[select e from Project e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout padding="false">
+        <formLayout classNames="master-detail-layout" height="100%">
+            <vbox id="listLayout" height="100%">
+                <genericFilter id="genericFilter"
+                               dataLoader="licenceApplicationsDl">
+                    <properties include=".*"/>
+                </genericFilter>
+                <hbox id="buttonsPanel" classNames="buttons-panel">
+                    <button id="createBtn" action="licenceApplicationsDataGrid.create"/>
+                    <button id="editBtn" action="licenceApplicationsDataGrid.edit"/>
+                    <button id="removeBtn" action="licenceApplicationsDataGrid.remove"/>
+                    <simplePagination id="pagination" dataLoader="licenceApplicationsDl"/>
+                </hbox>
+                <dataGrid id="licenceApplicationsDataGrid"
+                          width="100%"
+                          minHeight="20em"
+                          dataContainer="licenceApplicationsDc"
+                          columnReorderingAllowed="true">
+                    <actions>
+                        <action id="create" type="list_create"/>
+                        <action id="edit" type="list_edit"/>
+                        <action id="remove" type="list_remove"/>
+                    </actions>
+                    <columns resizable="true">
+                        <column property="applicantId"/>
+                        <column property="stepId"/>
+                        <column property="status"/>
+                        <column property="stepLevel"/>
+                        <column property="maxSteps"/>
+                        <column property="referenceNumber"/>
+                        <column property="applicationCategoryId"/>
+                        <column property="expertId"/>
+                        <column property="projectId"/>
+                    </columns>
+                </dataGrid>
+                <hbox id="lookupActions" visible="false">
+                    <button id="selectBtn" action="selectAction"/>
+                    <button id="discardBtn" action="discardAction"/>
+                </hbox>
+            </vbox>
+            <vbox id="detailsLayout" height="100%">
+                <formLayout id="form" dataContainer="licenceApplicationDc">
+                    <entityComboBox id="applicantIdField" property="applicantId"
+                    dataContainer="licenceApplicationDc" itemsContainer="applicantDc"
+                                    label="msg://applicantIdField.label">
+                        <actions>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityComboBox>
+                    <entityComboBox id="stepIdField" property="stepId"
+                    dataContainer="licenceApplicationDc" itemsContainer="stepDc"
+                                    label="msg://stepIdField.label">
+                        <actions>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityComboBox>
+                    <textField id="statusField" property="status" readOnly="true"/>
+                    <textField id="stepLevelField" property="stepLevel"/>
+                    <textField id="maxStepsField" property="maxSteps"/>
+                    <textField id="referenceNumberField" property="referenceNumber"/>
+                    <entityComboBox id="applicationCategoryIdField" property="applicationCategoryId"
+                    dataContainer="licenceApplicationDc" itemsContainer="applicationCategoryDc"
+                                    label="msg://applicationCategoryIdField.label">
+                        <actions>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityComboBox>
+                    <entityComboBox id="expertIdField" property="expertId"
+                    dataContainer="licenceApplicationDc" itemsContainer="expertDc"
+                                    label="msg://expertIdField.label">
+                        <actions>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityComboBox>
+                    <entityComboBox id="projectIdField" property="projectId"
+                    dataContainer="licenceApplicationDc" itemsContainer="projectDc"
+                                    label="msg://projectIdField.label">
+                        <actions>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityComboBox>
+                </formLayout>
+                <hbox id="detailActions">
+                    <button id="saveBtn" text="msg:///actions.Save" icon="CHECK" themeNames="primary"/>
+                    <button id="cancelBtn" text="msg:///actions.Cancel" icon="BAN"/>
+                </hbox>
+            </vbox>
+        </formLayout>
+    </layout>
+</view>
