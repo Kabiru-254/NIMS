@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://permitToxicMiningExtractionApplicationListView.title"
+      focusComponent="permitToxicMiningExtractionApplicationsDataGrid">
+    <data>
+        <collection id="permitToxicMiningExtractionApplicationsDc"
+                    class="com.company.nemademo.entity.PermitToxicMiningExtractionApplication">
+            <fetchPlan extends="_base">
+                <property name="permitApplicationId" fetchPlan="_instance_name">
+                    <property name="referenceNumber"/>
+                </property>
+                <property name="permitApplicantId" fetchPlan="_instance_name">
+                    <property name="lastName"/>
+                </property>
+            </fetchPlan>
+            <loader id="permitToxicMiningExtractionApplicationsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from PermitToxicMiningExtractionApplication e]]>
+                </query>
+            </loader>
+        </collection>
+        <instance id="permitToxicMiningExtractionApplicationDc"
+                  class="com.company.nemademo.entity.PermitToxicMiningExtractionApplication">
+            <fetchPlan extends="_base">
+                <property name="permitApplicationId" fetchPlan="_instance_name">
+                    <property name="referenceNumber"/>
+                </property>
+                <property name="permitApplicantId" fetchPlan="_instance_name">
+                    <property name="lastName"/>
+                </property>
+            </fetchPlan>
+            <loader id="permitToxicMiningExtractionApplicationDl"/>
+        </instance>
+        <collection id="permitApplicationDc" class="com.company.nemademo.entity.PermitsApplication">
+            <fetchPlan extends="_base"/>
+            <loader id="permitApplicationDl">
+                <query>
+                    <![CDATA[select e from PermitsApplication e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="permitApplicantDc" class="com.company.nemademo.entity.PermitApplicant">
+            <fetchPlan extends="_base"/>
+            <loader id="permitApplicantDl">
+                <query>
+                    <![CDATA[select e from PermitApplicant e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout padding="false">
+        <formLayout classNames="master-detail-layout" height="100%">
+            <vbox id="listLayout" height="100%">
+                <genericFilter id="genericFilter"
+                               dataLoader="permitToxicMiningExtractionApplicationsDl">
+                    <properties include=".*"/>
+                </genericFilter>
+                <hbox id="buttonsPanel" classNames="buttons-panel">
+                    <button id="createBtn" action="permitToxicMiningExtractionApplicationsDataGrid.create"/>
+                    <button id="editBtn" action="permitToxicMiningExtractionApplicationsDataGrid.edit"/>
+                    <button id="removeBtn" action="permitToxicMiningExtractionApplicationsDataGrid.remove"/>
+                    <simplePagination id="pagination" dataLoader="permitToxicMiningExtractionApplicationsDl"/>
+                </hbox>
+                <dataGrid id="permitToxicMiningExtractionApplicationsDataGrid"
+                          width="100%"
+                          minHeight="20em"
+                          dataContainer="permitToxicMiningExtractionApplicationsDc"
+                          columnReorderingAllowed="true">
+                    <actions>
+                        <action id="create" type="list_create"/>
+                        <action id="edit" type="list_edit"/>
+                        <action id="remove" type="list_remove"/>
+                    </actions>
+                    <columns resizable="true">
+                        <column property="permitApplicationId"/>
+                        <column property="permitApplicantId"/>
+                        <column property="manufacturerName"/>
+                        <column property="manufacturerAddress"/>
+                    </columns>
+                </dataGrid>
+                <hbox id="lookupActions" visible="false">
+                    <button id="selectBtn" action="selectAction"/>
+                    <button id="discardBtn" action="discardAction"/>
+                </hbox>
+            </vbox>
+            <vbox id="detailsLayout" height="100%">
+                <formLayout id="form" dataContainer="permitToxicMiningExtractionApplicationDc">
+                    <entityComboBox id="permitApplicationIdField" property="permitApplicationId"
+                    dataContainer="permitToxicMiningExtractionApplicationDc" itemsContainer="permitApplicationDc"
+                                    label="msg://permitApplicationIdField.label">
+                        <actions>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityComboBox>
+                    <entityComboBox id="permitApplicantIdField" property="permitApplicantId"
+                    dataContainer="permitToxicMiningExtractionApplicationDc" itemsContainer="permitApplicantDc"
+                                    label="msg://permitApplicantIdField.label">
+                        <actions>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityComboBox>
+                    <textField id="manufacturerNameField" property="manufacturerName"/>
+                    <textField id="manufacturerAddressField" property="manufacturerAddress"/>
+                </formLayout>
+                <hbox id="detailActions">
+                    <button id="saveBtn" text="msg:///actions.Save" icon="CHECK" themeNames="primary"/>
+                    <button id="cancelBtn" text="msg:///actions.Cancel" icon="BAN"/>
+                </hbox>
+            </vbox>
+        </formLayout>
+    </layout>
+</view>

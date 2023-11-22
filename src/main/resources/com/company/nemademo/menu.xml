@@ -4,40 +4,154 @@
     <menu opened="true" id="application" title="msg://com.company.nemademo/menu.application.title">
         <menu id="configurations" description="msg://com.company.nemademo/menu_config.configurations.description"
               title="msg://com.company.nemademo/menu_config.configurations.title" icon="COG_O">
-            <item view="ApplicationCategory.list"
-                  title="msg://com.company.nemademo.view.applicationcategory/applicationCategoryListView.title"
-                  icon="CALENDAR_ENVELOPE" classNames="menu-item"/>
-            <item view="LicenceApplicationStep.list"
-                  title="msg://com.company.nemademo.view.applicationstep/applicationStepListView.title" icon="LEVEL_UP"
-                  classNames="menu-item"/>
-            <item view="LicenceType.list" title="msg://com.company.nemademo.view.licencetype/licenceTypeListView.title"
-                  icon="TOOLS" classNames="menu-item"/>
-            <item view="Organization.list"
-                  title="msg://com.company.nemademo.view.organization/organizationListView.title"
-                  icon="GOOGLE_PLUS_SQUARE" classNames="menu-item"/>
-            <item view="Recommendation.list"
-                  title="msg://com.company.nemademo.view.recommendation/recommendationListView.title" icon="RECORDS"
-                  classNames="menu-item"/>
-            <item view="Sector.list" title="msg://com.company.nemademo.view.sector/sectorListView.title" icon="CIRCLE"
-                  classNames="menu-item"/>
-            <item view="SubSector.list" title="msg://com.company.nemademo.view.subsector/subSectorListView.title"
-                  icon="CIRCLE_THIN" classNames="menu-item"/>
-            <item view="User.list" title="msg://com.company.nemademo.view.user/UserListView.title" icon="USER"
-                  classNames="menu-item"/>
+            <menu id="usersConfigs" description="msg://com.company.nemademo/menu_config.usersConfigs.description"
+                  title="msg://com.company.nemademo/menu_config.usersConfigs.title" icon="USER_STAR">
+                <item view="UserRoles.list" title="msg://com.company.nemademo.view.userroles/userRolesListView.title"
+                      icon="USER_HEART"/>
+                <item view="User.list" title="msg://com.company.nemademo.view.user/UserListView.title" icon="USER"
+                      classNames="menu-item"/>
+            </menu>
+            <menu id="Licencing Configurations"
+                  description="msg://com.company.nemademo/menu_config.Licencing Configurations.description"
+                  title="msg:///com.company.nemademo.menu_config.licencingconfigs.title" icon="MOBILE_BROWSER">
+                <item view="LicenceType.list"
+                      title="msg://com.company.nemademo.view.licencetype/licenceTypeListView.title" icon="TOOLS"
+                      classNames="menu-item"/>
+                <item view="LicenceApplicationStep.list"
+                      title="msg://com.company.nemademo.view.applicationstep/applicationStepListView.title"
+                      icon="LEVEL_UP" classNames="menu-item"/>
+                <item view="ApplicationCategory.list"
+                      title="msg://com.company.nemademo.view.applicationcategory/applicationCategoryListView.title"
+                      icon="CALENDAR_ENVELOPE" classNames="menu-item"/>
+                <item view="Organization.list"
+                      title="msg://com.company.nemademo.view.organization/organizationListView.title"
+                      icon="GOOGLE_PLUS_SQUARE" classNames="menu-item"/>
+                <item view="Recommendation.list"
+                      title="msg://com.company.nemademo.view.recommendation/recommendationListView.title" icon="RECORDS"
+                      classNames="menu-item"/>
+                <item view="Sector.list" title="msg://com.company.nemademo.view.sector/sectorListView.title"
+                      icon="CIRCLE" classNames="menu-item"/>
+                <item view="SubSector.list" title="msg://com.company.nemademo.view.subsector/subSectorListView.title"
+                      icon="CIRCLE_THIN" classNames="menu-item"/>
+            </menu>
+            <menu id="Permits Configurations"
+                  description="msg://com.company.nemademo/menu_config.Permits Configurations.description"
+                  title="msg:///com.company.nemademo.menu_config.permitsconfigs.title" icon="ADOBE_FLASH">
+                <item view="PermitsTypeAndRequirements.list"
+                      title="msg://com.company.nemademo.view.permitstypeandrequirements/permitsTypeAndRequirementsListView.title"
+                      icon="LIGHTBULB"/>
+            </menu>
+            <menu id="clearanceModuleConfigs"
+                  description="msg://com.company.nemademo/menu_config.clearanceModuleConfigs.description"
+                  title="msg://com.company.nemademo/menu_config.clearanceModuleConfigs.title" icon="AUTOMATION">
+                <item view="ClearanceCertificatesRequirements.list"
+                      title="msg://com.company.nemademo.view.clearancecertificatesrequirements/clearanceCertificatesRequirementsListView.title"
+                      icon="COFFEE"/>
+            </menu>
+            <menu id="incidentModuleConfigs"
+                  description="msg://com.company.nemademo/menu_config.incidentModuleConfigs.description"
+                  title="msg://com.company.nemademo/menu_config.incidentModuleConfigs.title" icon="ANGLE_DOUBLE_DOWN">
+                <item view="IncidentCategories.list"
+                      title="msg://com.company.nemademo.view.incidentcategories/incidentCategoriesListView.title"
+                      icon="CALC_BOOK"/>
+                <item view="IncidentStatuses.list"
+                      title="msg://com.company.nemademo.view.incidentstatuses/incidentStatusesListView.title"
+                      icon="BULLETS"/>
+            </menu>
+            <menu id="chemicalMgmtConfigs"
+                  description="msg://com.company.nemademo/menu_config.chemicalMgmtConfigs.description"
+                  title="msg://com.company.nemademo/menu_config.chemicalMgmtConfigs.title" icon="AMBULANCE">
+                <item view="ToxicHarzadRequirements.list"
+                      title="msg://com.company.nemademo.view.toxicharzadrequirements/toxicHarzadRequirementsListView.title"
+                      icon="ANCHOR"/>
+                <item view="LabDesignation.list"
+                      title="msg://com.company.nemademo.view.labdesignation/labDesignationListView.title"
+                      icon="DIAMOND"/>
+            </menu>
+            <menu id="caseAdvocatesConfig"
+                  description="msg://com.company.nemademo/menu_config.caseAdvocatesConfig.description"
+                  title="msg://com.company.nemademo/menu_config.caseAdvocatesConfig.title" icon="ADD_DOCK">
+                <item view="CaseOwnerAdvocates.list"
+                      title="msg://com.company.nemademo.view.caseowneradvocates/caseOwnerAdvocatesListView.title"
+                      icon="BULLSEYE"/>
+            </menu>
         </menu>
-        <item view="Expert.list" title="msg://com.company.nemademo.view.expert/expertListView.title" icon="NATIVE_BUTTON"
-              classNames="menu-item"/>
-        <item view="Applicant.list" title="msg://com.company.nemademo.view.applicant/applicantListView.title"
-              icon="USERS" classNames="menu-item"/>
-        <item view="Project.list" title="msg://com.company.nemademo.view.project/projectListView.title"
-              icon="PROGRESSBAR" classNames="menu-item"/>
-        <item view="LicenceApplication.list"
-              title="msg://com.company.nemademo.view.licenceapplication/licenceApplicationListView.title" icon="MAGIC"
-              classNames="menu-item"/>
-        <item view="Review.list" title="msg://com.company.nemademo.view.review/reviewListView.title" icon="LIST"
-              classNames="menu-item"/>
-        <item view="PublicComments.list"
-              title="msg://com.company.nemademo.view.publiccomments/publicCommentsListView.title"
-              icon="COMMENT_ELLIPSIS_O" classNames="menu-item"/>
+        <menu id="Licencing Module" description="msg://com.company.nemademo/menu_config.Licencing Module.description"
+              title="msg:///com.company.nemademo.menu_config.licencingmodule.title" icon="CUTLERY">
+            <item view="Expert.list" title="msg://com.company.nemademo.view.expert/expertListView.title"
+                  icon="NATIVE_BUTTON" classNames="menu-item"/>
+            <item view="Applicant.list" title="msg://com.company.nemademo.view.applicant/applicantListView.title"
+                  icon="USERS" classNames="menu-item"/>
+            <item view="Project.list" title="msg://com.company.nemademo.view.project/projectListView.title"
+                  icon="PROGRESSBAR" classNames="menu-item"/>
+            <item view="LicenceApplication.list"
+                  title="msg://com.company.nemademo.view.licenceapplication/licenceApplicationListView.title"
+                  icon="MAGIC" classNames="menu-item"/>
+            <item view="Review.list" title="msg://com.company.nemademo.view.review/reviewListView.title" icon="LIST"
+                  classNames="menu-item"/>
+            <item view="PublicComments.list"
+                  title="msg://com.company.nemademo.view.publiccomments/publicCommentsListView.title"
+                  icon="COMMENT_ELLIPSIS_O" classNames="menu-item"/>
+        </menu>
+        <menu id="Permits Module" description="msg://com.company.nemademo/menu_config.Permits Module.description"
+              title="msg:///com.company.nemademo.menu_config.permitsmodule.title" icon="MAGIC">
+            <item view="PermitsApplication.list"
+                  title="msg://com.company.nemademo.view.permitsapplication/permitsApplicationListView.title"
+                  icon="PLUS_CIRCLE"/>
+            <item view="PermitApplicant.list"
+                  title="msg://com.company.nemademo.view.permitapplicant/permitApplicantListView.title"
+                  icon="USER_CARD"/>
+            <item view="PermitExportTransBoundaryApplication.list"
+                  title="msg://com.company.nemademo.view.permitexporttransboundaryapplication/permitExportTransBoundaryApplicationListView.title"
+                  icon="BOAT"/>
+            <item view="PermitOzoneDepletingApplication.list"
+                  title="msg://com.company.nemademo.view.permitozonedepletingapplication/permitOzoneDepletingApplicationListView.title"
+                  icon="SCALE"/>
+            <item view="PermitToxicHarzadousIndustrialApplication.list"
+                  title="msg://com.company.nemademo.view.permittoxicharzadousindustrialapplication/permitToxicHarzadousIndustrialApplicationListView.title"
+                  icon="BACKWARDS"/>
+            <item view="PermitToxicMiningExtractionApplication.list"
+                  title="msg://com.company.nemademo.view.permittoxicminingextractionapplication/permitToxicMiningExtractionApplicationListView.title"
+                  icon="MICROPHONE"/>
+            <item view="PermitsReview.list"
+                  title="msg://com.company.nemademo.view.permitsreview/permitsReviewListView.title" icon="SPOON"/>
+        </menu>
+        <menu id="ClearanceManagementModule"
+              description="msg://com.company.nemademo/menu_config.ClearanceManagementModule.description"
+              title="msg://com.company.nemademo/menu_config.ClearanceManagementModule.title" icon="CLUSTER">
+            <item view="ClearanceCertificateApplication.list"
+                  title="msg://com.company.nemademo.view.clearancecertificateapplication/clearanceCertificateApplicationListView.title"
+                  icon="CLOUD_DOWNLOAD"/>
+            <item view="ClearanceCertificateReview.list"
+                  title="msg://com.company.nemademo.view.clearancecertificatereview/clearanceCertificateReviewListView.title"
+                  icon="CREDIT_CARD"/>
+        </menu>
+        <menu id="incidentManagementModule"
+              description="msg://com.company.nemademo/menu_config.incidentManagementModule.description"
+              title="msg://com.company.nemademo/menu_config.incidentManagementModule.title" icon="ACADEMY_CAP">
+            <item view="IncidentManagement.list"
+                  title="msg://com.company.nemademo.view.incidentmanagement/incidentManagementListView.title"
+                  icon="MALE"/>
+        </menu>
+        <menu id="chemicalsDbMgt" description="msg://com.company.nemademo/menu_config.chemicalsDbMgt.description"
+              title="msg://com.company.nemademo/menu_config.chemicalsDbMgt.title" icon="BARCODE">
+            <item view="DesignatedLabs.list"
+                  title="msg://com.company.nemademo.view.designatedlabs/designatedLabsListView.title"
+                  icon="CHEVRON_CIRCLE_DOWN_O"/>
+            <item view="LabApplication.list"
+                  title="msg://com.company.nemademo.view.labapplication/labApplicationListView.title"
+                  icon="CHEVRON_CIRCLE_RIGHT_O"/>
+            <item view="ToxicHarzardRegistration.list"
+                  title="msg://com.company.nemademo.view.toxicharzardregistration/toxicHarzardRegistrationListView.title"
+                  icon="FEMALE"/>
+        </menu>
+        <menu id="caseMgtModule" description="msg://com.company.nemademo/menu_config.caseMgtModule.description"
+              title="msg://com.company.nemademo/menu_config.caseMgtModule.title" icon="BUILDING_O">
+            <item view="CaseManagement.list"
+                  title="msg://com.company.nemademo.view.casemanagement/caseManagementListView.title" icon="BUTTON"/>
+            <item view="CasePartiesInvolved.list"
+                  title="msg://com.company.nemademo.view.casepartiesinvolved/casePartiesInvolvedListView.title"
+                  icon="COMPRESS_SQUARE"/>
+        </menu>
     </menu>
 </menu-config>

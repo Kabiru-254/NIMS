@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://permitOzoneDepletingApplicationListView.title"
+      focusComponent="permitOzoneDepletingApplicationsDataGrid">
+    <data>
+        <collection id="permitOzoneDepletingApplicationsDc"
+                    class="com.company.nemademo.entity.PermitOzoneDepletingApplication">
+            <fetchPlan extends="_base">
+                <property name="permitApplicationId" fetchPlan="_instance_name">
+                    <property name="referenceNumber"/>
+                </property>
+                <property name="permitApplicantId" fetchPlan="_instance_name">
+                    <property name="lastName"/>
+                </property>
+            </fetchPlan>
+            <loader id="permitOzoneDepletingApplicationsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from PermitOzoneDepletingApplication e]]>
+                </query>
+            </loader>
+        </collection>
+        <instance id="permitOzoneDepletingApplicationDc"
+                  class="com.company.nemademo.entity.PermitOzoneDepletingApplication">
+            <fetchPlan extends="_base">
+                <property name="permitApplicationId" fetchPlan="_instance_name">
+                    <property name="referenceNumber"/>
+                </property>
+                <property name="permitApplicantId" fetchPlan="_instance_name">
+                    <property name="lastName"/>
+                </property>
+            </fetchPlan>
+            <loader id="permitOzoneDepletingApplicationDl"/>
+        </instance>
+        <collection id="permitApplicationDc" class="com.company.nemademo.entity.PermitsApplication">
+            <fetchPlan extends="_base"/>
+            <loader id="permitApplicationDl">
+                <query>
+                    <![CDATA[select e from PermitsApplication e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="permitApplicantDc" class="com.company.nemademo.entity.PermitApplicant">
+            <fetchPlan extends="_base"/>
+            <loader id="permitApplicantDl">
+                <query>
+                    <![CDATA[select e from PermitApplicant e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout padding="false">
+        <formLayout classNames="master-detail-layout" height="100%">
+            <vbox id="listLayout" height="100%">
+                <genericFilter id="genericFilter"
+                               dataLoader="permitOzoneDepletingApplicationsDl">
+                    <properties include=".*"/>
+                </genericFilter>
+                <hbox id="buttonsPanel" classNames="buttons-panel">
+                    <button id="createBtn" action="permitOzoneDepletingApplicationsDataGrid.create"/>
+                    <button id="editBtn" action="permitOzoneDepletingApplicationsDataGrid.edit"/>
+                    <button id="removeBtn" action="permitOzoneDepletingApplicationsDataGrid.remove"/>
+                    <simplePagination id="pagination" dataLoader="permitOzoneDepletingApplicationsDl"/>
+                </hbox>
+                <dataGrid id="permitOzoneDepletingApplicationsDataGrid"
+                          width="100%"
+                          minHeight="20em"
+                          dataContainer="permitOzoneDepletingApplicationsDc"
+                          columnReorderingAllowed="true">
+                    <actions>
+                        <action id="create" type="list_create"/>
+                        <action id="edit" type="list_edit"/>
+                        <action id="remove" type="list_remove"/>
+                    </actions>
+                    <columns resizable="true">
+                        <column property="permitApplicationId"/>
+                        <column property="referenceNumber"/>
+                        <column property="permitApplicantId"/>
+                        <column property="odlLicenceNumber"/>
+                        <column property="controlPeriodStartDate"/>
+                        <column property="controlPeriodEndDate"/>
+                        <column property="contactPersonName"/>
+                        <column property="pin"/>
+                    </columns>
+                </dataGrid>
+                <hbox id="lookupActions" visible="false">
+                    <button id="selectBtn" action="selectAction"/>
+                    <button id="discardBtn" action="discardAction"/>
+                </hbox>
+            </vbox>
+            <vbox id="detailsLayout" height="100%">
+                <formLayout id="form" dataContainer="permitOzoneDepletingApplicationDc">
+                    <entityComboBox id="permitApplicationIdField" property="permitApplicationId"
+                    dataContainer="permitOzoneDepletingApplicationDc" itemsContainer="permitApplicationDc"
+                                    label="msg://permitApplicationIdField.label">
+                        <actions>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityComboBox>
+                    <textField id="referenceNumberField" property="referenceNumber"/>
+                    <entityComboBox id="permitApplicantIdField" property="permitApplicantId"
+                    dataContainer="permitOzoneDepletingApplicationDc" itemsContainer="permitApplicantDc"
+                                    label="msg://permitApplicantIdField.label">
+                        <actions>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityComboBox>
+                    <textField id="odlLicenceNumberField" property="odlLicenceNumber"/>
+                    <datePicker id="controlPeriodStartDateField" property="controlPeriodStartDate"/>
+                    <datePicker id="controlPeriodEndDateField" property="controlPeriodEndDate"/>
+                    <textField id="contactPersonNameField" property="contactPersonName"/>
+                    <textField id="pinField" property="pin"/>
+                </formLayout>
+                <hbox id="detailActions">
+                    <button id="saveBtn" text="msg:///actions.Save" icon="CHECK" themeNames="primary"/>
+                    <button id="cancelBtn" text="msg:///actions.Cancel" icon="BAN"/>
+                </hbox>
+            </vbox>
+        </formLayout>
+    </layout>
+</view>

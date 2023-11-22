@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="NemaDemo">
+        <createTable tableName="DESIGNATED_LABS">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_DESIGNATED_LABS"/>
+            </column>
+            <column name="LAB_NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="timestamp with time zone"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="timestamp with time zone"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="NemaDemo">
+        <createTable tableName="LAB_APPLICATION">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_LAB_APPLICATION"/>
+            </column>
+            <column name="REFERENCE_NUMBER" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LAB_NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LAB_LOCATION" type="VARCHAR(255)"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="timestamp with time zone"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="timestamp with time zone"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="3" author="NemaDemo">
+        <createTable tableName="LAB_DESIGNATION">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_LAB_DESIGNATION"/>
+            </column>
+            <column name="LAB_TYPE" type="VARCHAR(255)"/>
+            <column name="CRITERIA" type="VARCHAR(255)"/>
+            <column name="REQUIREMENTS" type="VARCHAR(255)"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="timestamp with time zone"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="timestamp with time zone"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="4" author="NemaDemo">
+        <createTable tableName="TOXIC_HARZAD_REQUIREMENTS">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TOXIC_HARZAD_REQUIREMENTS"/>
+            </column>
+            <column name="CHEMICAL_OR_MATERIAL" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CRITERIA" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REQUIREMENTS" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="timestamp with time zone"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="timestamp with time zone"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="5" author="NemaDemo">
+        <createTable tableName="TOXIC_HARZARD_REGISTRATION">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_TOXIC_HARZARD_REGISTRATION"/>
+            </column>
+            <column name="TOXIC_MATERIAL_ID" type="UUID"/>
+            <column name="REFERENCE_NUMBER" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="timestamp with time zone"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="timestamp with time zone"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="6" author="NemaDemo">
+        <createIndex indexName="IDX_TOXIC_HARZARD_REGISTRATION_TOXIC_MATERIAL" tableName="TOXIC_HARZARD_REGISTRATION">
+            <column name="TOXIC_MATERIAL_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="TOXIC_MATERIAL_ID" baseTableName="TOXIC_HARZARD_REGISTRATION"
+                                 constraintName="FK_TOXIC_HARZARD_REGISTRATION_ON_TOXIC_MATERIAL"
+                                 referencedColumnNames="ID" referencedTableName="TOXIC_HARZAD_REQUIREMENTS"/>
+    </changeSet>
+</databaseChangeLog>

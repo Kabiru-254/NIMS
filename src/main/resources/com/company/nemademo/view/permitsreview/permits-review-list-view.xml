@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://permitsReviewListView.title"
+      focusComponent="permitsReviewsDataGrid">
+    <data>
+        <collection id="permitsReviewsDc"
+                    class="com.company.nemademo.entity.PermitsReview">
+            <fetchPlan extends="_base">
+                <property name="permitApplicationId" fetchPlan="_instance_name">
+                    <property name="referenceNumber"/>
+                </property>
+                <property name="reviewerUserId" fetchPlan="_instance_name"/>
+                <property name="permitApplicationStatusRecommended" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader id="permitsReviewsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from PermitsReview e]]>
+                </query>
+            </loader>
+        </collection>
+        <instance id="permitsReviewDc"
+                  class="com.company.nemademo.entity.PermitsReview">
+            <fetchPlan extends="_base">
+                <property name="permitApplicationId" fetchPlan="_instance_name">
+                    <property name="referenceNumber"/>
+                </property>
+                <property name="reviewerUserId" fetchPlan="_instance_name"/>
+                <property name="permitApplicationStatusRecommended" fetchPlan="_instance_name"/>
+            </fetchPlan>
+            <loader id="permitsReviewDl"/>
+        </instance>
+        <collection id="permitApplicationDc" class="com.company.nemademo.entity.PermitsApplication">
+            <fetchPlan extends="_base"/>
+            <loader id="permitApplicationDl">
+                <query>
+                    <![CDATA[select e from PermitsApplication e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="permitRecommendationDc" class="com.company.nemademo.entity.Recommendation">
+            <fetchPlan extends="_base"/>
+            <loader id="permitRecommendationDl">
+                <query>
+                    <![CDATA[select e from Recommendation e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="userDc" class="com.company.nemademo.entity.User">
+            <fetchPlan extends="_base"/>
+            <loader id="userDl">
+                <query>
+                    <![CDATA[select e from User e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout padding="false">
+        <formLayout classNames="master-detail-layout" height="100%">
+            <vbox id="listLayout" height="100%">
+                <genericFilter id="genericFilter"
+                               dataLoader="permitsReviewsDl">
+                    <properties include=".*"/>
+                </genericFilter>
+                <hbox id="buttonsPanel" classNames="buttons-panel">
+                    <button id="createBtn" action="permitsReviewsDataGrid.create"/>
+                    <button id="editBtn" action="permitsReviewsDataGrid.edit"/>
+                    <button id="removeBtn" action="permitsReviewsDataGrid.remove"/>
+                    <simplePagination id="pagination" dataLoader="permitsReviewsDl"/>
+                </hbox>
+                <dataGrid id="permitsReviewsDataGrid"
+                          width="100%"
+                          minHeight="20em"
+                          dataContainer="permitsReviewsDc"
+                          columnReorderingAllowed="true">
+                    <actions>
+                        <action id="create" type="list_create"/>
+                        <action id="edit" type="list_edit"/>
+                        <action id="remove" type="list_remove"/>
+                    </actions>
+                    <columns resizable="true">
+                        <column property="permitApplicationId"/>
+                        <column property="reviewerUserId"/>
+                        <column property="reviews"/>
+                        <column property="permitApplicationStatusRecommended"/>
+                    </columns>
+                </dataGrid>
+                <hbox id="lookupActions" visible="false">
+                    <button id="selectBtn" action="selectAction"/>
+                    <button id="discardBtn" action="discardAction"/>
+                </hbox>
+            </vbox>
+            <vbox id="detailsLayout" height="100%">
+                <formLayout id="form" dataContainer="permitsReviewDc">
+                    <entityComboBox id="permitApplicationIdField" property="permitApplicationId"
+                                    dataContainer="permitsReviewDc" itemsContainer="permitApplicationDc"
+                                    label="msg://permitApplicationIdField.label">
+                        <actions>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityComboBox>
+                    <entityComboBox id="reviewerUserIdField" property="reviewerUserId"
+                                    dataContainer="permitsReviewDc" itemsContainer="userDc"
+                                    label="msg://reviewerUserIdField.label">
+                        <actions>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityComboBox>
+                    <textField id="reviewsField" property="reviews"/>
+                    <entityComboBox id="permitApplicationStatusRecommendedField"
+                                  property="permitApplicationStatusRecommended"
+                    dataContainer="permitsReviewDc" itemsContainer="permitRecommendationDc"
+                                    label="msg://permitApplicationStatusRecommendedField.label">
+                        <actions>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityComboBox>
+                </formLayout>
+                <hbox id="detailActions">
+                    <button id="saveBtn" text="msg:///actions.Save" icon="CHECK" themeNames="primary"/>
+                    <button id="cancelBtn" text="msg:///actions.Cancel" icon="BAN"/>
+                </hbox>
+            </vbox>
+        </formLayout>
+    </layout>
+</view>

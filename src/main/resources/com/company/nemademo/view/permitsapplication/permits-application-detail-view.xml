@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://permitsApplicationDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="permitsApplicationDc"
+                  class="com.company.nemademo.entity.PermitsApplication">
+            <fetchPlan extends="_base">
+                <property name="permitApplicantId" fetchPlan="_instance_name">
+                    <property name="lastName"/>
+                </property>
+
+                <property name="permitTypeId" fetchPlan="_instance_name">
+                    <property name="permitName"/>
+                </property>
+                <property name="sectionHeadId" fetchPlan="_base"/>
+                <property name="reviewerUserId" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader/>
+        </instance>
+        <collection id="permitApplicantDc" class="com.company.nemademo.entity.PermitApplicant">
+            <fetchPlan extends="_base"/>
+            <loader id="permitApplicantDl">
+                <query>
+                    <![CDATA[select e from PermitApplicant e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="userDc" class="com.company.nemademo.entity.User">
+            <fetchPlan extends="_base"/>
+            <loader id="userDl">
+                <query>
+                    <![CDATA[select e from User e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="permitTypeDc" class="com.company.nemademo.entity.PermitsTypeAndRequirements">
+            <fetchPlan extends="_base"/>
+            <loader id="permitTypeDl">
+                <query>
+                    <![CDATA[select e from PermitsTypeAndRequirements e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="permitsApplicationDc">
+            <textField id="referenceNumberField" property="referenceNumber"/>
+            <textField id="fileReferenceNumberField" property="fileReferenceNumber"/>
+            <textField id="applicationStatusField" property="applicationStatus"/>
+            <textField id="reviewStatusField" property="reviewStatus"/>
+            <entityComboBox id="permitApplicantIdField" property="permitApplicantId"
+            dataContainer="permitsApplicationDc" itemsContainer="permitApplicantDc"
+                            label="msg://permitApplicantIdField.label">
+                <actions>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityComboBox>
+            <entityComboBox id="permitTypeIdField" property="permitTypeId"
+            dataContainer="permitsApplicationDc" itemsContainer="permitTypeDc"
+                            label="msg://permitTypeIdField.label">
+                <actions>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityComboBox>
+            <entityComboBox id="sectionHeadIdField" property="sectionHeadId"
+                            dataContainer="permitsApplicationDc" itemsContainer="userDc"
+                            label="msg://sectionHeadIdField.label">
+                <actions>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityComboBox>
+            <entityComboBox id="reviewerUserIdField" property="reviewerUserId"
+                            dataContainer="permitsApplicationDc" itemsContainer="userDc"
+                            label="msg://reviewerUserIdField.label">
+                <actions>
+                    <action id="entityClear" type="entity_clear"/>
+                </actions>
+            </entityComboBox>
+        </formLayout>
+        <hbox id="detailActions">
+            <button id="saveAndCloseBtn" action="saveAction"/>
+            <button id="closeBtn" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

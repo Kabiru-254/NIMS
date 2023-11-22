@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://permitsApplicationListView.title"
+      focusComponent="permitsApplicationsDataGrid">
+    <data>
+        <collection id="permitsApplicationsDc"
+                    class="com.company.nemademo.entity.PermitsApplication">
+            <fetchPlan extends="_base">
+                <property name="permitApplicantId" fetchPlan="_instance_name">
+                    <property name="lastName"/>
+                </property>
+                <property name="permitTypeId" fetchPlan="_instance_name">
+                    <property name="permitName"/>
+                </property>
+                <property name="sectionHeadId" fetchPlan="_base"/>
+                <property name="reviewerUserId" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="permitsApplicationsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from PermitsApplication e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="permitsApplicationsDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createBtn" action="permitsApplicationsDataGrid.create"/>
+            <button id="editBtn" action="permitsApplicationsDataGrid.edit"/>
+            <button id="removeBtn" action="permitsApplicationsDataGrid.remove"/>
+            <simplePagination id="pagination" dataLoader="permitsApplicationsDl"/>
+        </hbox>
+        <dataGrid id="permitsApplicationsDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="permitsApplicationsDc"
+                  columnReorderingAllowed="true">
+            <actions>
+                <action id="create" type="list_create"/>
+                <action id="edit" type="list_edit"/>
+                <action id="remove" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="referenceNumber"/>
+                <column property="fileReferenceNumber"/>
+                <column property="applicationStatus"/>
+                <column property="reviewStatus"/>
+                <column property="permitApplicantId"/>
+                <column property="permitTypeId"/>
+                <column property="sectionHeadId"/>
+                <column property="reviewerUserId"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectBtn" action="selectAction"/>
+            <button id="discardBtn" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>

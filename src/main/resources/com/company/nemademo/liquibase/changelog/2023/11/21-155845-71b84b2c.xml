@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="NemaDemo">
+        <createTable tableName="CASE_MANAGEMENT">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CASE_MANAGEMENT"/>
+            </column>
+            <column name="COURT_NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DATE_INITIATED" type="DATE"/>
+            <column name="REFERENCE_NUMBER" type="VARCHAR(255)"/>
+            <column name="CASE_TYPE" type="INT"/>
+            <column name="CASE_OWNER_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CASE_RESOLUTION_DETAILS" type="VARCHAR(255)"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="timestamp with time zone"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="timestamp with time zone"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="NemaDemo">
+        <createTable tableName="CASE_OWNER_ADVOCATES">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CASE_OWNER_ADVOCATES"/>
+            </column>
+            <column name="FIRST_NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LAST_NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="QUALIFICATIONS" type="VARCHAR(255)"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="timestamp with time zone"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="timestamp with time zone"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="3" author="NemaDemo">
+        <createTable tableName="CASE_PARTIES_INVOLVED">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CASE_PARTIES_INVOLVED"/>
+            </column>
+            <column name="CASE_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DESIGNATION" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="timestamp with time zone"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="timestamp with time zone"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="4" author="NemaDemo">
+        <createIndex indexName="IDX_CASE_MANAGEMENT_CASE_OWNER" tableName="CASE_MANAGEMENT">
+            <column name="CASE_OWNER_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="CASE_OWNER_ID" baseTableName="CASE_MANAGEMENT"
+                                 constraintName="FK_CASE_MANAGEMENT_ON_CASE_OWNER" referencedColumnNames="ID"
+                                 referencedTableName="CASE_OWNER_ADVOCATES"/>
+    </changeSet>
+    <changeSet id="5" author="NemaDemo">
+        <createIndex indexName="IDX_CASE_PARTIES_INVOLVED_CASE" tableName="CASE_PARTIES_INVOLVED">
+            <column name="CASE_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="CASE_ID" baseTableName="CASE_PARTIES_INVOLVED"
+                                 constraintName="FK_CASE_PARTIES_INVOLVED_ON_CASE" referencedColumnNames="ID"
+                                 referencedTableName="CASE_MANAGEMENT"/>
+    </changeSet>
+</databaseChangeLog>

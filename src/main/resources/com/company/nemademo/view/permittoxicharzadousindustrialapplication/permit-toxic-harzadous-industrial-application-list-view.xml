@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://permitToxicHarzadousIndustrialApplicationListView.title"
+      focusComponent="permitToxicHarzadousIndustrialApplicationsDataGrid">
+    <data>
+        <collection id="permitToxicHarzadousIndustrialApplicationsDc"
+                    class="com.company.nemademo.entity.PermitToxicHarzadousIndustrialApplication">
+            <fetchPlan extends="_base">
+                <property name="permitApplicationId" fetchPlan="_instance_name">
+                    <property name="referenceNumber"/>
+                </property>
+            </fetchPlan>
+            <loader id="permitToxicHarzadousIndustrialApplicationsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from PermitToxicHarzadousIndustrialApplication e]]>
+                </query>
+            </loader>
+        </collection>
+        <instance id="permitToxicHarzadousIndustrialApplicationDc"
+                  class="com.company.nemademo.entity.PermitToxicHarzadousIndustrialApplication">
+            <fetchPlan extends="_base">
+                <property name="permitApplicationId" fetchPlan="_instance_name">
+                    <property name="referenceNumber"/>
+                </property>
+            </fetchPlan>
+            <loader id="permitToxicHarzadousIndustrialApplicationDl"/>
+        </instance>
+        <collection id="permitApplicationDc" class="com.company.nemademo.entity.PermitsApplication">
+            <fetchPlan extends="_base"/>
+            <loader id="permitApplicationDl">
+                <query>
+                    <![CDATA[select e from PermitsApplication e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout padding="false">
+        <formLayout classNames="master-detail-layout" height="100%">
+            <vbox id="listLayout" height="100%">
+                <genericFilter id="genericFilter"
+                               dataLoader="permitToxicHarzadousIndustrialApplicationsDl">
+                    <properties include=".*"/>
+                </genericFilter>
+                <hbox id="buttonsPanel" classNames="buttons-panel">
+                    <button id="createBtn" action="permitToxicHarzadousIndustrialApplicationsDataGrid.create"/>
+                    <button id="editBtn" action="permitToxicHarzadousIndustrialApplicationsDataGrid.edit"/>
+                    <button id="removeBtn" action="permitToxicHarzadousIndustrialApplicationsDataGrid.remove"/>
+                    <simplePagination id="pagination" dataLoader="permitToxicHarzadousIndustrialApplicationsDl"/>
+                </hbox>
+                <dataGrid id="permitToxicHarzadousIndustrialApplicationsDataGrid"
+                          width="100%"
+                          minHeight="20em"
+                          dataContainer="permitToxicHarzadousIndustrialApplicationsDc"
+                          columnReorderingAllowed="true">
+                    <actions>
+                        <action id="create" type="list_create"/>
+                        <action id="edit" type="list_edit"/>
+                        <action id="remove" type="list_remove"/>
+                    </actions>
+                    <columns resizable="true">
+                        <column property="permitApplicationId"/>
+                        <column property="importerOrExporter"/>
+                        <column property="name"/>
+                        <column property="address"/>
+                        <column property="natureOfBusiness"/>
+                    </columns>
+                </dataGrid>
+                <hbox id="lookupActions" visible="false">
+                    <button id="selectBtn" action="selectAction"/>
+                    <button id="discardBtn" action="discardAction"/>
+                </hbox>
+            </vbox>
+            <vbox id="detailsLayout" height="100%">
+                <formLayout id="form" dataContainer="permitToxicHarzadousIndustrialApplicationDc">
+                    <entityComboBox id="permitApplicationIdField" property="permitApplicationId"
+                                    dataContainer="permitToxicHarzadousIndustrialApplicationDc"
+                                    label="msg://permitApplicationIdField.label"
+                    itemsContainer="permitApplicationDc">
+                        <actions>
+                            <action id="entityClear" type="entity_clear"/>
+                        </actions>
+                    </entityComboBox>
+                    <select id="importerOrExporterField" property="importerOrExporter"/>
+                    <textField id="nameField" property="name"/>
+                    <textField id="addressField" property="address"/>
+                    <textField id="natureOfBusinessField" property="natureOfBusiness"/>
+                </formLayout>
+                <hbox id="detailActions">
+                    <button id="saveBtn" text="msg:///actions.Save" icon="CHECK" themeNames="primary"/>
+                    <button id="cancelBtn" text="msg:///actions.Cancel" icon="BAN"/>
+                </hbox>
+            </vbox>
+        </formLayout>
+    </layout>
+</view>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="NemaDemo">
+        <createTable tableName="INCIDENT_CATEGORIES">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_INCIDENT_CATEGORIES"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="VARCHAR(255)"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="timestamp with time zone"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="timestamp with time zone"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="NemaDemo">
+        <createTable tableName="INCIDENT_MANAGEMENT">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_INCIDENT_MANAGEMENT"/>
+            </column>
+            <column name="INCIDENT_NUMBER" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INCIDENT_SUMMARY" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INCIDENT_CLASSIFICATION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INCIDENT_DETAILS" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CLIENT_NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CLIENT_PHONE_NUMBER" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CLIENT_EMAIL_ADDRESS" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INCIDENT_DATE" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ASSIGNED_OFFICER_ID" type="INT"/>
+            <column name="OFFICER_NOTES" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INCIDENT_STATUS_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INCIDENT_CATEGORY_ID" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="timestamp with time zone"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="timestamp with time zone"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="3" author="NemaDemo">
+        <createTable tableName="INCIDENT_STATUSES">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_INCIDENT_STATUSES"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="VERSION" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED_BY" type="VARCHAR(255)"/>
+            <column name="CREATED_DATE" type="timestamp with time zone"/>
+            <column name="LAST_MODIFIED_BY" type="VARCHAR(255)"/>
+            <column name="LAST_MODIFIED_DATE" type="timestamp with time zone"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="4" author="NemaDemo">
+        <createIndex indexName="IDX_INCIDENT_MANAGEMENT_INCIDENT_CATEGORY" tableName="INCIDENT_MANAGEMENT">
+            <column name="INCIDENT_CATEGORY_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="INCIDENT_CATEGORY_ID" baseTableName="INCIDENT_MANAGEMENT"
+                                 constraintName="FK_INCIDENT_MANAGEMENT_ON_INCIDENT_CATEGORY" referencedColumnNames="ID"
+                                 referencedTableName="INCIDENT_CATEGORIES"/>
+    </changeSet>
+    <changeSet id="5" author="NemaDemo">
+        <createIndex indexName="IDX_INCIDENT_MANAGEMENT_INCIDENT_STATUS" tableName="INCIDENT_MANAGEMENT">
+            <column name="INCIDENT_STATUS_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="INCIDENT_STATUS_ID" baseTableName="INCIDENT_MANAGEMENT"
+                                 constraintName="FK_INCIDENT_MANAGEMENT_ON_INCIDENT_STATUS" referencedColumnNames="ID"
+                                 referencedTableName="INCIDENT_STATUSES"/>
+    </changeSet>
+</databaseChangeLog>

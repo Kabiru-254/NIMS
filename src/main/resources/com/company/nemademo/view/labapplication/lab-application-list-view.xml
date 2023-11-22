@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://labApplicationListView.title"
+      focusComponent="labApplicationsDataGrid">
+    <data>
+        <collection id="labApplicationsDc"
+                    class="com.company.nemademo.entity.LabApplication">
+            <fetchPlan extends="_base"/>
+            <loader id="labApplicationsDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from LabApplication e]]>
+                </query>
+            </loader>
+        </collection>
+        <instance id="labApplicationDc"
+                  class="com.company.nemademo.entity.LabApplication">
+            <fetchPlan extends="_base"/>
+            <loader id="labApplicationDl"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout padding="false">
+        <formLayout classNames="master-detail-layout" height="100%">
+            <vbox id="listLayout" height="100%">
+                <genericFilter id="genericFilter"
+                               dataLoader="labApplicationsDl">
+                    <properties include=".*"/>
+                </genericFilter>
+                <hbox id="buttonsPanel" classNames="buttons-panel">
+                    <button id="createBtn" action="labApplicationsDataGrid.create"/>
+                    <button id="editBtn" action="labApplicationsDataGrid.edit"/>
+                    <button id="removeBtn" action="labApplicationsDataGrid.remove"/>
+                    <simplePagination id="pagination" dataLoader="labApplicationsDl"/>
+                </hbox>
+                <dataGrid id="labApplicationsDataGrid"
+                          width="100%"
+                          minHeight="20em"
+                          dataContainer="labApplicationsDc"
+                          columnReorderingAllowed="true">
+                    <actions>
+                        <action id="create" type="list_create"/>
+                        <action id="edit" type="list_edit"/>
+                        <action id="remove" type="list_remove"/>
+                    </actions>
+                    <columns resizable="true">
+                        <column property="referenceNumber"/>
+                        <column property="labName"/>
+                        <column property="labLocation"/>
+                    </columns>
+                </dataGrid>
+                <hbox id="lookupActions" visible="false">
+                    <button id="selectBtn" action="selectAction"/>
+                    <button id="discardBtn" action="discardAction"/>
+                </hbox>
+            </vbox>
+            <vbox id="detailsLayout" height="100%">
+                <formLayout id="form" dataContainer="labApplicationDc">
+                    <textField id="referenceNumberField" property="referenceNumber"/>
+                    <textField id="labNameField" property="labName"/>
+                    <textField id="labLocationField" property="labLocation"/>
+                </formLayout>
+                <hbox id="detailActions">
+                    <button id="saveBtn" text="msg:///actions.Save" icon="CHECK" themeNames="primary"/>
+                    <button id="cancelBtn" text="msg:///actions.Cancel" icon="BAN"/>
+                </hbox>
+            </vbox>
+        </formLayout>
+    </layout>
+</view>
